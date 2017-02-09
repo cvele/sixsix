@@ -67,6 +67,13 @@ class Order
         PriceTrait::__construct as private priceTraitConstructor;
     }
 
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="tax", type="integer")
+     */
+    private $tax;
+
     /** adds contact fields **/
     use ContactTrait;
 
@@ -178,7 +185,7 @@ class Order
 
 
     /**
-     * Adds meal addon for this meal
+     * Adds meal option for this meal
      *
      * @param  OrderItem $item
      * @return Meal
@@ -191,7 +198,7 @@ class Order
     }
 
     /**
-     * Removes meal addon for this meal
+     * Removes meal option for this meal
      *
      * @param  OrderItem $item
      * @return Meal
@@ -199,6 +206,31 @@ class Order
     public function removeOrderItem(OrderItem $item): self
     {
         $this->orderItems->removeElement($item);
+
+        return $this;
+    }
+
+
+    /**
+     * Get the value of Tax
+     *
+     * @return int
+     */
+    public function getTax(): int
+    {
+        return $this->tax;
+    }
+
+    /**
+     * Set the value of Tax
+     *
+     * @param int $tax
+     *
+     * @return self
+     */
+    public function setTax($tax): self
+    {
+        $this->tax = $tax;
 
         return $this;
     }

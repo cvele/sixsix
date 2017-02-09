@@ -10,12 +10,12 @@ use Gedmo\Timestampable\Traits\TimestampableEntity;
 use Gedmo\IpTraceable\Traits\IpTraceableEntity;
 
 /**
- * MealAddon
+ * MealOption
  *
- * @ORM\Table(name="meal_addons")
- * @ORM\Entity(repositoryClass="AppBundle\Repository\MealAddonRepository")
+ * @ORM\Table(name="meal_option")
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\MealOptionRepository")
  */
-class MealAddon
+class MealOption
 {
     /**
      * @var int
@@ -29,7 +29,7 @@ class MealAddon
     /**
      * @var Meal
      * @Gedmo\SortableGroup
-     * @ORM\ManyToOne(targetEntity="Meal", inversedBy="addons")
+     * @ORM\ManyToOne(targetEntity="Meal", inversedBy="options")
      * @ORM\JoinColumn(name="meal_id", referencedColumnName="id", onDelete="CASCADE")
      */
     private $meal;

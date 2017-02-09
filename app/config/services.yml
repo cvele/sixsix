@@ -4,6 +4,22 @@ parameters:
 #    parameter_name: value
 
 services:
-#    service_name:
-#        class: AppBundle\Directory\ClassName
-#        arguments: ["@another_service_name", "plain_value", "%parameter_name%"]
+    app.json_api_serializer:
+        class: League\Fractal\Serializer\JsonApiSerializer
+
+    app.serializer.manager:
+        class: League\Fractal\Manager
+        calls:
+            - ["setSerializer", ["@app.json_api_serializer"]]
+
+    app.serializer.transformer.meal:
+        class: AppBundle\Transformer\Entity\MealTransformer
+
+    app.serializer.transformer.meal_option:
+        class: AppBundle\Transformer\Entity\MealOptionTransformer
+
+    serialize_listener:
+        class: AppBundle\Event\Listener\SerializeListener
+        arguments: ["@app.serializer.manager", "@app.serializer.transformer.meal", "@app.serializer.transformer.meal_option"]
+        tags:
+            - { name: doctrine.orm.entity_listener }

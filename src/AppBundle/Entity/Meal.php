@@ -71,10 +71,10 @@ class Meal
     private $position;
 
     /**
-     * @var MealAddon
-     * @ORM\OneToMany(targetEntity="MealAddon", mappedBy="meal")
+     * @var MealOption
+     * @ORM\OneToMany(targetEntity="MealOption", mappedBy="meal")
      */
-    private $addons;
+    private $options;
 
     /**
      * Hook timestampable behavior
@@ -95,7 +95,7 @@ class Meal
     public function __construct($currency = 'RSD')
     {
         $this->priceTraitConstructor($currency);
-        $this->addons = new ArrayCollection();
+        $this->options = new ArrayCollection();
     }
 
     /**
@@ -205,27 +205,27 @@ class Meal
     }
 
     /**
-     * Adds meal addon for this meal
+     * Adds meal option for this meal
      *
-     * @param  MealAddon $addon
+     * @param  MealOption $option
      * @return Meal
      */
-    public function addAddon(MealAddon $addon): self
+    public function addOption(MealOption $option): self
     {
-        $this->addons->add($addon);
+        $this->options->add($option);
 
         return $this;
     }
 
     /**
-     * Removes meal addon for this meal
+     * Removes meal option for this meal
      *
-     * @param  MealAddon $addon
+     * @param  MealOption $option
      * @return Meal
      */
-    public function removeAddon(MealAddon $addon): self
+    public function removeOption(MealOption $option): self
     {
-        $this->addons->removeElement($addon);
+        $this->options->removeElement($option);
 
         return $this;
     }

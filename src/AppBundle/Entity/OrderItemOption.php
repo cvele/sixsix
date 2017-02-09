@@ -8,13 +8,12 @@ use Gedmo\Timestampable\Traits\TimestampableEntity;
 use Gedmo\IpTraceable\Traits\IpTraceableEntity;
 
 /**
+ * OrderItemOption
  *
- * OrderItem
- *
- * @ORM\Table(name="order_items")
- * @ORM\Entity(repositoryClass="AppBundle\Repository\OrderItemRepository")
+ * @ORM\Table(name="order_item_option")
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\OrderItemOptionRepository")
  */
-class OrderItem
+class OrderItemOption
 {
     /**
      * @var int
@@ -26,18 +25,27 @@ class OrderItem
     private $id;
 
     /**
-     * @var Order
-     * @ORM\ManyToOne(targetEntity="Order", inversedBy="orderItems")
-     * @ORM\JoinColumn(name="order_id", referencedColumnName="id", onDelete="CASCADE")
+     * @var OrderItem
+     * @ORM\ManyToOne(targetEntity="OrderItem")
+     * @ORM\JoinColumn(name="order_item_id", referencedColumnName="id", onDelete="CASCADE")
      */
-    private $order;
+    private $orderItem;
 
     /**
-     * @var Meal
-     * @ORM\ManyToOne(targetEntity="Meal")
-     * @ORM\JoinColumn(name="meal_id", referencedColumnName="id", nullable=true, onDelete="SET NULL")
+     * @var MealOption
+     * @ORM\ManyToOne(targetEntity="MealOption")
+     * @ORM\JoinColumn(name="meal_option_id", referencedColumnName="id", onDelete="SET NULL")
      */
-    private $meal;
+    private $mealOption;
+
+    /**
+     * Serializes MealOption Entity related to this order,
+     * in case that meal option is updated or deleted in the future
+     * @var string
+     *
+     * @ORM\Column(name="serialized_item", type="text")
+     */
+    private $serializedItem;
 
     /**
      * Add price field to this entity.
@@ -46,15 +54,6 @@ class OrderItem
     use PriceTrait {
         PriceTrait::__construct as private priceTraitConstructor;
     }
-
-    /**
-     * Serializes Meal Entity related to this order,
-     * in case that meal is updated or deleted in the future
-     * @var string
-     *
-     * @ORM\Column(name="serialized_item", type="text")
-     */
-    private $serializedItem;
 
     /**
      * Hook timestampable behavior
@@ -68,14 +67,6 @@ class OrderItem
      */
     use IpTraceableEntity;
 
-    /**
-     * Constructor
-     * @param string $currency
-     */
-    public function __construct($currency = 'RSD')
-    {
-        $this->priceTraitConstructor($currency);
-    }
 
     /**
      * Get id
@@ -88,50 +79,50 @@ class OrderItem
     }
 
     /**
-     * Get the value of Meal
+     * Get the value of Order Item
      *
      * @return Meal
      */
-    public function getMeal()
+    public function getOrderItem()
     {
-        return $this->meal;
+        return $this->orderItem;
     }
 
     /**
-     * Set the value of Meal
+     * Set the value of Order Item
      *
-     * @param Meal $meal
+     * @param OrderItem $orderItem
      *
      * @return self
      */
-    public function setMeal(Meal $meal)
+    public function setOrderItem(OrderItem $orderItem)
     {
-        $this->meal = $meal;
+        $this->orderItem = $orderItem;
 
         return $this;
     }
 
 
     /**
-     * Get the value of Order
+     * Get the value of Meal Option
      *
-     * @return Order
+     * @return MealOption
      */
-    public function getOrder()
+    public function getMealOption()
     {
-        return $this->order;
+        return $this->mealOption;
     }
 
     /**
-     * Set the value of Order
+     * Set the value of Meal Option
      *
-     * @param Order $order
+     * @param MealOption $mealOption
      *
      * @return self
      */
-    public function setOrder(Order $order)
+    public function setMealOption(MealOption $mealOption)
     {
-        $this->order = $order;
+        $this->mealOption = $mealOption;
 
         return $this;
     }

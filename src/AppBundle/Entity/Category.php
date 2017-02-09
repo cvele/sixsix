@@ -86,4 +86,13 @@ class Category
         return $this->meals;
     }
 
+    /**
+     * Returns string representation
+     * @return string
+     */
+    public function __toString(): string
+    {
+        return $this->getDisplayName();
+    }
+
 }
