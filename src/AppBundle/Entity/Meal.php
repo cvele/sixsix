@@ -2,6 +2,7 @@
 
 namespace AppBundle\Entity;
 
+use ArrayObject;
 use Doctrine\ORM\Mapping as ORM;
 use AppBundle\Entity\Traits\PriceTrait;
 use AppBundle\Entity\Traits\NameTrait;
@@ -9,12 +10,15 @@ use Gedmo\Timestampable\Traits\TimestampableEntity;
 use Gedmo\IpTraceable\Traits\IpTraceableEntity;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Component\HttpFoundation\File\File;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 /**
  * Meal
  *
  * @ORM\Table(name="meals")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\MealRepository")
+ * @Vich\Uploadable
  */
 class Meal
 {
@@ -68,11 +72,11 @@ class Meal
      * @Gedmo\SortablePosition
      * @ORM\Column(name="position", type="integer")
      */
-    private $position;
+    private $position = 0;
 
     /**
      * @var MealOption
-     * @ORM\OneToMany(targetEntity="MealOption", mappedBy="meal")
+     * @ORM\OneToMany(targetEntity="MealOption", mappedBy="meal", cascade={"persist"})
      */
     private $options;
 
@@ -89,6 +93,18 @@ class Meal
     use IpTraceableEntity;
 
     /**
+     * @ORM\Column(type="string", length=255)
+     * @var string
+     */
+    private $image;
+
+    /**
+     * @Vich\UploadableField(mapping="product_images", fileNameProperty="image")
+     * @var File
+     */
+    private $imageFile;
+
+    /**
      * Constructor
      * @param string $currency
      */
@@ -103,7 +119,7 @@ class Meal
      *
      * @return int
      */
-    public function getId(): int
+    public function getId(): ?int
     {
         return $this->id;
     }
@@ -151,7 +167,7 @@ class Meal
      *
      * @return string
      */
-    public function getDescription(): string
+    public function getDescription(): ?string
     {
         return $this->description;
     }
@@ -161,7 +177,7 @@ class Meal
      *
      * @return Category
      */
-    public function getCategory(): Category
+    public function getCategory(): ?Category
     {
         return $this->category;
     }
@@ -185,7 +201,7 @@ class Meal
      *
      * @return int
      */
-    public function getPosition(): int
+    public function getPosition(): ?int
     {
         return $this->position;
     }
@@ -205,6 +221,14 @@ class Meal
     }
 
     /**
+     * @return ArrayObject
+     */
+    public function getOptions()
+    {
+        return $this->options;
+    }
+
+    /**
      * Adds meal option for this meal
      *
      * @param  MealOption $option
@@ -212,6 +236,7 @@ class Meal
      */
     public function addOption(MealOption $option): self
     {
+        $option->setMeal($this);
         $this->options->add($option);
 
         return $this;
@@ -230,5 +255,41 @@ class Meal
         return $this;
     }
 
+    public function __toString()
+    {
+        return $this->getDisplayName();
+    }
 
+    public function getOptionCount()
+    {
+        return $this->getOptions()->count();
+    }
+
+    public function setImageFile(File $image = null)
+    {
+        $this->imageFile = $image;
+
+        // VERY IMPORTANT:
+        // It is required that at least one field changes if you are using Doctrine,
+        // otherwise the event listeners won't be called and the file is lost
+        if ($image) {
+            // if 'updatedAt' is not defined in your entity, use another property
+            $this->updatedAt = new \DateTime('now');
+        }
+    }
+
+    public function getImageFile()
+    {
+        return $this->imageFile;
+    }
+
+    public function setImage($image)
+    {
+        $this->image = $image;
+    }
+
+    public function getImage()
+    {
+        return $this->image;
+    }
 }

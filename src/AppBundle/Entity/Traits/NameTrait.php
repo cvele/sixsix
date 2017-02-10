@@ -17,7 +17,7 @@ trait NameTrait
     /**
      * @var string
      *
-     * @ORM\Column(name="display_name", type="string", length=255)
+     * @ORM\Column(name="display_name", type="string", length=255, nullable=true)
      */
     private $displayName;
 
@@ -53,7 +53,7 @@ trait NameTrait
      *
      * @return string
      */
-    public function getName(): string
+    public function getName(): ?string
     {
         return $this->name;
     }
@@ -77,7 +77,7 @@ trait NameTrait
      *
      * @return string
      */
-    public function getDisplayName(): string
+    public function getDisplayName(): ?string
     {
         if (!$this->displayName) {
             return $this->getName();
@@ -85,4 +85,15 @@ trait NameTrait
 
         return $this->displayName;
     }
+
+    /**
+     * Get the value of Slug
+     *
+     * @return string
+     */
+    public function getSlug()
+    {
+        return $this->slug;
+    }
+
 }

@@ -1,0 +1,20 @@
+easy_admin:
+    entities:
+        Category:
+            class: AppBundle\Entity\Category
+            form:
+                fields:
+                    - name
+                    - displayName
+                    - position
+            list:
+                actions: ['show']
+                title: "Categories"
+                help: 'List of all avilable categories. Categories represent items in menu, such as: `salads`, `barbique`...'
+                fields:
+                    - id
+                    - position
+                    - displayName
+                    - { property: 'mealCount', label: '# Meals' }
+            show:
+                title: '%%entity_label%% (#%%entity_id%%)'

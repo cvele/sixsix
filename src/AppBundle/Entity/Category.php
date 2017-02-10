@@ -71,7 +71,7 @@ class Category
      *
      * @return int
      */
-    public function getId(): int
+    public function getId(): ?int
     {
         return $this->id;
     }
@@ -81,7 +81,7 @@ class Category
      *
      * @return ArrayCollection
      */
-    public function getMeals(): ArrayCollection
+    public function getMeals()
     {
         return $this->meals;
     }
@@ -93,6 +93,36 @@ class Category
     public function __toString(): string
     {
         return $this->getDisplayName();
+    }
+
+
+    /**
+     * Get the value of Position
+     *
+     * @return int
+     */
+    public function getPosition()
+    {
+        return $this->position;
+    }
+
+    /**
+     * Set the value of Position
+     *
+     * @param int $position
+     *
+     * @return self
+     */
+    public function setPosition($position)
+    {
+        $this->position = $position;
+
+        return $this;
+    }
+
+    public function getMealCount()
+    {
+        return $this->meals->count();
     }
 
 }

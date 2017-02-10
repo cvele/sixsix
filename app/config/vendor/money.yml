@@ -1,0 +1,13 @@
+tbbc_money:
+    currencies: ["RSD"]
+    reference_currency: "RSD"
+    decimals: 2
+
+twig:
+    form_theme:
+        - 'TbbcMoneyBundle:Form:fields.html.twig'
+
+doctrine:
+    dbal:
+        types:
+            money: Tbbc\MoneyBundle\Type\MoneyType

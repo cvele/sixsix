@@ -20,3 +20,4 @@ parameters:
 
     # Tax amount
     tax: 20
+    app.path.product_images: /uploads/images/products

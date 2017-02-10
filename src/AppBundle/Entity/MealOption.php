@@ -92,7 +92,7 @@ class MealOption
      *
      * @return mixed
      */
-    public function getPosition(): int
+    public function getPosition(): ?int
     {
         return $this->position;
     }
@@ -116,9 +116,29 @@ class MealOption
      *
      * @return Meal
      */
-    public function getMeal(): Meal
+    public function getMeal(): ?Meal
     {
         return $this->meal;
+    }
+
+
+    /**
+     * Set the value of Meal
+     *
+     * @param Meal $meal
+     *
+     * @return self
+     */
+    public function setMeal(Meal $meal)
+    {
+        $this->meal = $meal;
+
+        return $this;
+    }
+
+    public function __toString()
+    {
+        return $this->getDisplayName() . " " . $this->getPriceAsText();
     }
 
 }

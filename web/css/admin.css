@@ -1,0 +1,6 @@
+.field-meal_option > .col-sm-2 {
+    display: none;
+}
+.field-meal_option .collection-empty {
+    display: none;
+}

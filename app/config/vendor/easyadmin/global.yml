@@ -1,0 +1,17 @@
+easy_admin:
+    site_name: 'SixSix'
+    formats:
+        date: 'd/m/Y'
+        datetime: 'd/m/Y H:i'
+        time: 'H:i:s'
+    design:
+        menu:
+            - { entity: 'Meal', label: 'Meals', icon: 'cutlery' }
+            - { entity: 'Category', label: 'Categories', icon: 'tree' }
+        color_scheme: 'dark'
+        form_theme: 'vertical'
+        assets:
+            css:
+                - '/css/admin.css'
+            js:
+                - '/js/admin.js'

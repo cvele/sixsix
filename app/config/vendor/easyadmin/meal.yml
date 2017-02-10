@@ -1,0 +1,49 @@
+easy_admin:
+    entities:
+        Meal:
+            class: AppBundle\Entity\Meal
+            form:
+                fields:
+                    - { type: 'group', css_class: 'col-sm-12', label: 'Basic information', icon: 'pencil' }
+                    - { property: 'name', label: 'Name' }
+                    - { property: 'displayName', label: 'Display Name' }
+                    - { property: 'imageFile', type: 'vich_image' }
+                    - { property: 'description', label: 'Description' }
+
+                    - { type: 'group', css_class: 'col-sm-12 meal-options-group', label: 'Meal Options', icon: 'puzzle-piece' }
+                    - { property: 'options', label: '', type: 'collection', type_options: { entry_type: 'AppBundle\Form\Type\MealOptionType', allow_add: true, allow_delete: true, by_reference:false} }
+
+                    - { type: 'group', css_class: 'col-sm-6', label: 'Pricing', icon: 'money' }
+                    - { property: 'inStock', label: 'Is Available' }
+                    - { property: 'price', label: 'Price', type: 'Tbbc\MoneyBundle\Form\Type\SimpleMoneyType' }
+                    - { type: 'group', css_class: 'col-sm-6', label: 'Sorting', icon: 'tree' }
+                    - { property: 'category', label: 'Category', type_options: { required: true } }
+                    - { property: 'position', label: 'Postition' }
+            list:
+                actions: ['show']
+                title: "Meals"
+                help: 'List of all avilable meals. To remove meal from the menu, toggle `In Stock` column.'
+                fields:
+                    - id
+                    - { property: 'image', type: 'image', base_path: %app.path.product_images% }
+                    - position
+                    - displayName
+                    - { property: 'priceAsText', label: 'Price' }
+                    - category
+                    - inStock
+                    - { property: 'optionCount', label: '# Options' }
+                    - updatedAt
+            show:
+                title: '%%entity_label%% (#%%entity_id%%)'
+                fields:
+                    - id
+                    - { property: 'image', type: 'image', base_path: %app.path.product_images% }
+                    - name
+                    - displayName
+                    - { property: 'priceAsText', label: 'Price' }
+                    - position
+                    - category
+                    - inStock
+                    - options
+                    - createdAt
+                    - updatedAt
