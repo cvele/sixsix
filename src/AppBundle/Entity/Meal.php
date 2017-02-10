@@ -12,6 +12,7 @@ use Gedmo\Mapping\Annotation as Gedmo;
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\HttpFoundation\File\File;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
+use Gedmo\Blameable\Traits\BlameableEntity;
 
 /**
  * Meal
@@ -103,6 +104,12 @@ class Meal
      * @var File
      */
     private $imageFile;
+
+    /**
+     * Hook blameable behavior
+     * updates createdBy, updatedBy fields
+     */
+    use BlameableEntity;
 
     /**
      * Constructor

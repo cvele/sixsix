@@ -16,6 +16,16 @@ class AdminController extends BaseAdminController
         return $meal;
     }
 
+    public function createNewUserEntity()
+    {
+       return $this->get('fos_user.user_manager')->createUser();
+    }
+
+   public function prePersistUserEntity($user)
+   {
+       $this->get('fos_user.user_manager')->updateUser($user, false);
+   }
+   
     // protected function createMealNewForm($entity, array $entityProperties)
     // {
     //     return $this->createForm(MealType::class, $entity);

@@ -8,6 +8,7 @@ easy_admin:
         menu:
             - { entity: 'Meal', label: 'Meals', icon: 'cutlery' }
             - { entity: 'Category', label: 'Categories', icon: 'tree' }
+            - { entity: 'User', label: 'Users', icon: 'user-circle' }
         color_scheme: 'dark'
         form_theme: 'vertical'
         assets:

@@ -8,6 +8,7 @@ use Gedmo\Mapping\Annotation as Gedmo;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
 use Gedmo\IpTraceable\Traits\IpTraceableEntity;
 use AppBundle\Entity\Traits\NameTrait;
+use Gedmo\Blameable\Traits\BlameableEntity;
 
 /**
  * Category
@@ -56,7 +57,12 @@ class Category
      * updates createdFromIp, updatedFromIp fields
      */
     use IpTraceableEntity;
-
+    
+    /**
+     * Hook blameable behavior
+     * updates createdBy, updatedBy fields
+     */
+    use BlameableEntity;
 
     /**
      * constructor

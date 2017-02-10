@@ -19,6 +19,7 @@ class AppKernel extends Kernel
             new Tbbc\MoneyBundle\TbbcMoneyBundle(),
             new Vich\UploaderBundle\VichUploaderBundle(),
             new JavierEguiluz\Bundle\EasyAdminBundle\EasyAdminBundle(),
+            new FOS\UserBundle\FOSUserBundle(),
             new AppBundle\AppBundle(),
         ];
 

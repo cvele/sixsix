@@ -8,6 +8,7 @@ use AppBundle\Entity\Traits\NameTrait;
 use AppBundle\Entity\Traits\PriceTrait;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
 use Gedmo\IpTraceable\Traits\IpTraceableEntity;
+use Gedmo\Blameable\Traits\BlameableEntity;
 
 /**
  * MealOption
@@ -66,6 +67,12 @@ class MealOption
      * updates createdFromIp, updatedFromIp fields
      */
     use IpTraceableEntity;
+    
+    /**
+     * Hook blameable behavior
+     * updates createdBy, updatedBy fields
+     */
+    use BlameableEntity;
 
 
     /**

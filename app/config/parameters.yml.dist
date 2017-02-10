@@ -21,3 +21,4 @@ parameters:
     # Tax amount
     tax: 20
     app.path.product_images: /uploads/images/products
+    email_address: dummy@dummy.com
