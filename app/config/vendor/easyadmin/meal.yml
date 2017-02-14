@@ -16,7 +16,7 @@ easy_admin:
                     - { type: 'group', css_class: 'col-sm-6', label: 'Pricing', icon: 'money' }
                     - { property: 'inStock', label: 'Is Available' }
                     - { property: 'price', label: 'Price', type: 'Tbbc\MoneyBundle\Form\Type\SimpleMoneyType' }
-                    - { type: 'group', css_class: 'col-sm-6', label: 'Sorting', icon: 'tree' }
+                    - { type: 'group', css_class: 'col-sm-6', label: 'Sorting', icon: 'sort-amount-asc' }
                     - { property: 'category', label: 'Category', type_options: { required: true } }
                     - { property: 'position', label: 'Postition' }
             list:

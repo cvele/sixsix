@@ -34,7 +34,8 @@
         "javiereguiluz/easyadmin-bundle": "^1.16",
         "tbbc/money-bundle": "dev-master@dev",
         "vich/uploader-bundle": "^1.4",
-        "friendsofsymfony/user-bundle": "~2.0@dev"
+        "friendsofsymfony/user-bundle": "~2.0@dev",
+        "liip/imagine-bundle": "^1.7"
     },
     "require-dev": {
         "sensio/generator-bundle": "^3.0",

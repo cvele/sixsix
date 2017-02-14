@@ -3,9 +3,8 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use AppBundle\Entity\Traits\PriceTrait;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
-use Gedmo\IpTraceable\Traits\IpTraceableEntity;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  *
@@ -13,6 +12,7 @@ use Gedmo\IpTraceable\Traits\IpTraceableEntity;
  *
  * @ORM\Table(name="order_items")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\OrderItemRepository")
+ * @ORM\HasLifecycleCallbacks()
  */
 class OrderItem
 {
@@ -27,25 +27,23 @@ class OrderItem
 
     /**
      * @var Order
-     * @ORM\ManyToOne(targetEntity="Order", inversedBy="orderItems")
+     * @ORM\ManyToOne(targetEntity="Order", inversedBy="orderItems", cascade={"persist"})
      * @ORM\JoinColumn(name="order_id", referencedColumnName="id", onDelete="CASCADE")
      */
     private $order;
 
     /**
+     * @var ArrayCollection
+     * @ORM\OneToMany(targetEntity="OrderItemOption", mappedBy="mealOption", cascade={"persist"})
+     */
+    private $orderItemOptions;
+
+    /**
      * @var Meal
-     * @ORM\ManyToOne(targetEntity="Meal")
+     * @ORM\ManyToOne(targetEntity="Meal", cascade={"persist"})
      * @ORM\JoinColumn(name="meal_id", referencedColumnName="id", nullable=true, onDelete="SET NULL")
      */
     private $meal;
-
-    /**
-     * Add price field to this entity.
-     * Money\Money object returned.
-     */
-    use PriceTrait {
-        PriceTrait::__construct as private priceTraitConstructor;
-    }
 
     /**
      * Serializes Meal Entity related to this order,
@@ -63,18 +61,11 @@ class OrderItem
     use TimestampableEntity;
 
     /**
-     * Hook ip-traceable behavior
-     * updates createdFromIp, updatedFromIp fields
-     */
-    use IpTraceableEntity;
-
-    /**
      * Constructor
-     * @param string $currency
      */
-    public function __construct($currency = 'RSD')
+    public function __construct()
     {
-        $this->priceTraitConstructor($currency);
+        $this->orderItemOptions = new ArrayCollection;
     }
 
     /**
@@ -156,6 +147,43 @@ class OrderItem
     public function setSerializedItem($serializedItem)
     {
         $this->serializedItem = $serializedItem;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of Order Item Options
+     *
+     * @return ArrayCollection
+     */
+    public function getOrderItemOptions()
+    {
+        return $this->orderItemOptions;
+    }
+
+
+    /**
+     * Adds meal option for this meal
+     *
+     * @param  OrderItemOption $item
+     * @return Meal
+     */
+    public function addOrderItemOption(OrderItemOption $item): self
+    {
+        $this->orderItemOptions->add($item);
+
+        return $this;
+    }
+
+    /**
+     * Removes meal option for this meal
+     *
+     * @param  OrderItemOption $item
+     * @return Meal
+     */
+    public function removeOrderItemOption(OrderItemOption $item): self
+    {
+        $this->orderItemOptions->removeElement($item);
 
         return $this;
     }

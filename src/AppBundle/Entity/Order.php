@@ -6,7 +6,6 @@ use AppBundle\Entity\Traits\ContactTrait;
 use Doctrine\ORM\Mapping as ORM;
 use AppBundle\Entity\Traits\PriceTrait;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
-use Gedmo\IpTraceable\Traits\IpTraceableEntity;
 use Doctrine\Common\Collections\ArrayCollection;
 
 /**
@@ -48,7 +47,7 @@ class Order
 
     /**
      * @var ArrayCollection
-     * @ORM\OneToMany(targetEntity="OrderItem", mappedBy="order")
+     * @ORM\OneToMany(targetEntity="OrderItem", mappedBy="order", cascade={"persist"})
      */
     private $orderItems;
 
@@ -57,7 +56,7 @@ class Order
      *
      * @ORM\Column(name="status", type="integer")
      */
-    private $status;
+    private $status = self::STATUS_PENDING;
 
     /**
      * Add price field to this entity.
@@ -82,12 +81,6 @@ class Order
      * updates createdAt, updatedAt fields
      */
     use TimestampableEntity;
-
-    /**
-     * Hook ip-traceable behavior
-     * updates createdFromIp, updatedFromIp fields
-     */
-    use IpTraceableEntity;
 
     /**
      * Constructor
@@ -233,6 +226,16 @@ class Order
         $this->tax = $tax;
 
         return $this;
+    }
+
+    /**
+     * Returns price with added tax
+     * @return \Money\Money
+     */
+    public function getTotalPrice(): \Money\Money
+    {
+        $tax = $this->getPrice()->multiply($this->getTax()/100);
+        return $this->getPrice()->add($tax);
     }
 
 }

@@ -103,7 +103,7 @@ trait PhoneTrait
 
     /**
      * Returns __toString representation of phone
-     * 
+     *
      * @return string
      */
     public function getPhoneAsString()

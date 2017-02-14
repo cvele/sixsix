@@ -4,7 +4,7 @@ namespace AppBundle\Event\Listener;
 
 use AppBundle\Entity\OrderItem;
 use AppBundle\Entity\OrderItemOption;
-use Doctrine\ORM\Event\OnFlushEventArgs;
+use Doctrine\ORM\Event\LifecycleEventArgs;
 use League\Fractal\TransformerAbstract;
 use League\Fractal\Manager;
 use League\Fractal\Resource\Item;
@@ -47,43 +47,31 @@ class SerializeListener
     /**
      * @inheritDoc
      */
-    public function onFlush(OnFlushEventArgs $eventArgs)
+    public function prePersist(LifecycleEventArgs $eventArgs)
     {
-        $em = $eventArgs->getEntityManager();
-        $uow = $em->getUnitOfWork();
+        $entity = $eventArgs->getEntity();
+        $entityManager = $eventArgs->getEntityManager();
 
-        foreach ($uow->getScheduledEntityInsertions() as $entity) {
-            if ($entity instanceof OrderItem) {
-                $this->serializeMealForOrderItem($entity);
-            }
-
-            if ($entity instanceof OrderItemOption) {
-                $this->serializeMealOptionForOrderItemOption($entity);
-            }
+        if ($entity instanceof OrderItem) {
+            $this->serializeMealForOrderItem($entity);
         }
 
-        foreach ($uow->getScheduledEntityUpdates() as $entity) {
-            if ($entity instanceof OrderItem) {
-                $this->serializeMealForOrderItem($entity);
-            }
-
-            if ($entity instanceof OrderItemOption) {
-                $this->serializeMealOptionForOrderItemOption($entity);
-            }
+        if ($entity instanceof OrderItemOption) {
+            $this->serializeMealOptionForOrderItemOption($entity);
         }
     }
 
     private function serializeMealForOrderItem(OrderItem $entity)
     {
-        $resource = new Item($book, $this->mealTransformer, 'meal');
-        $serializedItem = $manager->createData($resource);
+        $resource = new Item($entity->getMeal(), $this->mealTransformer, 'meal');
+        $serializedItem = $this->serializeManager->createData($resource)->toJson();
         $entity->setSerializedItem($serializedItem);
     }
 
     private function serializeMealOptionForOrderItemOption(OrderItemOption $entity)
     {
-        $resource = new Item($book, $this->mealOptionTransformer, 'mealOption');
-        $serializedItem = $manager->createData($resource);
+        $resource = new Item($entity->getMealOption(), $this->mealOptionTransfomer, 'mealOption');
+        $serializedItem = $this->serializeManager->createData($resource)->toJson();
         $entity->setSerializedItem($serializedItem);
     }
 }

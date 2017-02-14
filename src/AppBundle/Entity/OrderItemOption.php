@@ -3,9 +3,7 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use AppBundle\Entity\Traits\PriceTrait;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
-use Gedmo\IpTraceable\Traits\IpTraceableEntity;
 
 /**
  * OrderItemOption
@@ -26,14 +24,14 @@ class OrderItemOption
 
     /**
      * @var OrderItem
-     * @ORM\ManyToOne(targetEntity="OrderItem")
+     * @ORM\ManyToOne(targetEntity="OrderItem", cascade={"persist"})
      * @ORM\JoinColumn(name="order_item_id", referencedColumnName="id", onDelete="CASCADE")
      */
     private $orderItem;
 
     /**
      * @var MealOption
-     * @ORM\ManyToOne(targetEntity="MealOption")
+     * @ORM\ManyToOne(targetEntity="MealOption", inversedBy="orderItemOptions", cascade={"persist"})
      * @ORM\JoinColumn(name="meal_option_id", referencedColumnName="id", onDelete="SET NULL")
      */
     private $mealOption;
@@ -48,25 +46,10 @@ class OrderItemOption
     private $serializedItem;
 
     /**
-     * Add price field to this entity.
-     * Money\Money object returned.
-     */
-    use PriceTrait {
-        PriceTrait::__construct as private priceTraitConstructor;
-    }
-
-    /**
      * Hook timestampable behavior
      * updates createdAt, updatedAt fields
      */
     use TimestampableEntity;
-
-    /**
-     * Hook ip-traceable behavior
-     * updates createdFromIp, updatedFromIp fields
-     */
-    use IpTraceableEntity;
-
 
     /**
      * Get id

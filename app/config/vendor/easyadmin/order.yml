@@ -1,0 +1,4 @@
+easy_admin:
+    entities:
+        Order:
+            class: AppBundle\Entity\Order

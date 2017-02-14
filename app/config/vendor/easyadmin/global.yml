@@ -6,9 +6,11 @@ easy_admin:
         time: 'H:i:s'
     design:
         menu:
+            - { entity: 'Order', label: 'Orders', icon: 'shopping-bag' }
             - { entity: 'Meal', label: 'Meals', icon: 'cutlery' }
-            - { entity: 'Category', label: 'Categories', icon: 'tree' }
-            - { entity: 'User', label: 'Users', icon: 'user-circle' }
+            - { entity: 'Category', label: 'Categories', icon: 'sort-amount-asc' }
+            # - { entity: 'User', label: 'Users', icon: 'user-circle' }
+            - { label: 'Logout', route: 'fos_user_security_logout', icon: 'sign-out' }
         color_scheme: 'dark'
         form_theme: 'vertical'
         assets:

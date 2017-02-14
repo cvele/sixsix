@@ -1,0 +1,44 @@
+body {
+    background-color: #333;
+}
+
+#menu {
+    font-family: 'Source Sans Pro', sans-serif;
+    color: #fff;
+    font-weight: 300;
+}
+
+#menu .meal-title {
+    font-weight: 300;
+    font-style: italic;
+    font-size:1.8em;
+}
+
+#menu .meal-description {
+    font-weight: 200;
+    font-style: italic;
+    font-size:0.8em;
+}
+
+#menu .meal-price,
+#menu .meal-description {
+    display: flex;
+    justify-content: center; /* align horizontal */
+    align-items: center; /* align vertical */
+}
+
+#menu .meal-price .currency {
+    opacity: 0.8;
+    font-weight: 200;
+    font-style: normal;
+    font-size:1.5em;
+}
+#menu .meal-price .value {
+    font-weight: 600;
+    font-style: normal;
+    font-size:2em;
+    color: #FF9500;
+}
+#menu .row {
+    border-bottom: 1px solid #fff;
+}

@@ -61,7 +61,7 @@ trait PriceTrait
     {
         $this->priceAmount = $price->getAmount();
         $this->priceCurrency = $price->getCurrency()->getCode();
-
+        $this->price = $price;
         return $this;
     }
 

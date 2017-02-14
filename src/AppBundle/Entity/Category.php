@@ -6,7 +6,6 @@ use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
-use Gedmo\IpTraceable\Traits\IpTraceableEntity;
 use AppBundle\Entity\Traits\NameTrait;
 use Gedmo\Blameable\Traits\BlameableEntity;
 
@@ -52,12 +51,6 @@ class Category
      */
     use TimestampableEntity;
 
-    /**
-     * Hook ip-traceable behavior
-     * updates createdFromIp, updatedFromIp fields
-     */
-    use IpTraceableEntity;
-    
     /**
      * Hook blameable behavior
      * updates createdBy, updatedBy fields
@@ -126,6 +119,9 @@ class Category
         return $this;
     }
 
+    /**
+     * @return int
+     */
     public function getMealCount()
     {
         return $this->meals->count();

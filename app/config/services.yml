@@ -22,4 +22,4 @@ services:
         class: AppBundle\Event\Listener\SerializeListener
         arguments: ["@app.serializer.manager", "@app.serializer.transformer.meal", "@app.serializer.transformer.meal_option"]
         tags:
-            - { name: doctrine.orm.entity_listener }
+            - { name: doctrine.event_listener, event: prePersist, method: prePersist }

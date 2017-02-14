@@ -32,8 +32,8 @@ class MealOptionTransformer extends Fractal\TransformerAbstract
 	        'displayName' => $option->getDisplayName(),
 	        'slug'        => $option->getSlug(),
             'price'       => sprintf("%s %s", $option->getPrice()->getAmount(), $option->getPrice()->getCurrency()),
-            'createdAt'   => $meal->getCreatedAt(),
-            'updatedAt'   => $meal->getUpdatedAt()
+            'createdAt'   => $option->getCreatedAt(),
+            'updatedAt'   => $option->getUpdatedAt()
 	    ];
 	}
 
@@ -43,7 +43,7 @@ class MealOptionTransformer extends Fractal\TransformerAbstract
      * @param MealOption $option
      * @return \League\Fractal\Resource\Item
      */
-    public function includeAuthor(MealOption $option)
+    public function includeMeal(MealOption $option)
     {
         $meal = $option->getMeal();
 

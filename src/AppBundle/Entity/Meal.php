@@ -7,7 +7,6 @@ use Doctrine\ORM\Mapping as ORM;
 use AppBundle\Entity\Traits\PriceTrait;
 use AppBundle\Entity\Traits\NameTrait;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
-use Gedmo\IpTraceable\Traits\IpTraceableEntity;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\HttpFoundation\File\File;
@@ -86,12 +85,6 @@ class Meal
      * updates createdAt, updatedAt fields
      */
     use TimestampableEntity;
-
-    /**
-     * Hook ip-traceable behavior
-     * updates createdFromIp, updatedFromIp fields
-     */
-    use IpTraceableEntity;
 
     /**
      * @ORM\Column(type="string", length=255)
@@ -285,6 +278,9 @@ class Meal
         }
     }
 
+    /**
+     * @return string
+     */
     public function getImageFile()
     {
         return $this->imageFile;

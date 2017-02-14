@@ -7,7 +7,6 @@ use Gedmo\Mapping\Annotation as Gedmo;
 use AppBundle\Entity\Traits\NameTrait;
 use AppBundle\Entity\Traits\PriceTrait;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
-use Gedmo\IpTraceable\Traits\IpTraceableEntity;
 use Gedmo\Blameable\Traits\BlameableEntity;
 
 /**
@@ -62,12 +61,6 @@ class MealOption
      */
     use TimestampableEntity;
 
-    /**
-     * Hook ip-traceable behavior
-     * updates createdFromIp, updatedFromIp fields
-     */
-    use IpTraceableEntity;
-    
     /**
      * Hook blameable behavior
      * updates createdBy, updatedBy fields
@@ -143,6 +136,10 @@ class MealOption
         return $this;
     }
 
+    /**
+     * Returns string representation
+     * @return string
+     */
     public function __toString()
     {
         return $this->getDisplayName() . " " . $this->getPriceAsText();
